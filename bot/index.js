@@ -16,18 +16,10 @@ var MainOptions = {
 // Default store: volatile in-memory store - Only for prototyping!
 // We provide adapters for Azure Table, CosmosDb, SQL Azure, or you can implement your own!
 // For samples and documentation, see: https://github.com/Microsoft/BotBuilder-Azure
-var inMemoryStorage = new builder.MemoryBotStorage();
-
-
-
-
+//var inMemoryStorage = new builder.MemoryBotStorage();
 
 var bot = new builder.UniversalBot(connector, function (session) {
 
-  console.log(session);
-
-
-  session.send("hola");
     if (localizedRegex(session, [MainOptions.Shop]).test(session.message.text)) {
         // Order Flowers
         return session.beginDialog('shop:/');
@@ -46,11 +38,9 @@ var bot = new builder.UniversalBot(connector, function (session) {
             builder.CardAction.imBack(session, session.gettext(MainOptions.Support), MainOptions.Support)
         ]);
 
-    session.send("hola");
-
     session.send(new builder.Message(session)
         .addAttachment(welcomeCard));
-}).set('storage', inMemoryStorage); // Register in memory storage
+});//.set('storage', inMemoryStorage); // Register in memory storage
 
 // Enable Conversation Data persistence
 bot.set('persistConversationData', true);
