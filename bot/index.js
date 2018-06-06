@@ -20,6 +20,8 @@ var MainOptions = {
 
 var bot = new builder.UniversalBot(connector, function (session) {
 
+    
+
     if (localizedRegex(session, [MainOptions.Shop]).test(session.message.text)) {
         // Order Flowers
         return session.beginDialog('shop:/');
@@ -40,6 +42,13 @@ var bot = new builder.UniversalBot(connector, function (session) {
 
     session.send(new builder.Message(session)
         .addAttachment(welcomeCard));
+    session.send("hola como estas?");
+
+    var mensaje = session.message.text;
+
+
+
+  
 });//.set('storage', inMemoryStorage); // Register in memory storage
 
 // Enable Conversation Data persistence
@@ -90,11 +99,20 @@ bot.on('conversationUpdate', function (message) {
     if (message.membersAdded) {
         message.membersAdded.forEach(function (identity) {
             if (identity.id === message.address.bot.id) {
-                bot.beginDialog(message.address, '/');
+                bot.beginDialog(message.address, '/hola');
             }
         });
     }
 });
+
+
+bot.dialog("/hola", [
+    function (session) {
+        session.send("Indicame con que tenes problemas", "Microsoft Excel?|Microsoft Word?|Microsoft Power Point?|(Salir)", { listStyle: 4 } );
+        
+    }
+    
+]);
 
 // Cache of localized regex to match selection from main options
 var LocalizedRegexCache = {};
